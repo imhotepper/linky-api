@@ -16,8 +16,10 @@ public class FeedsController: ControllerBase{
     [HttpPost]
     public ActionResult Post([FromBody] FeedVM model){
         if (!ModelState.IsValid) return BadRequest(ModelState);
-        _db.Add(new Feed{Url = model.Url});
+        var  feed = new Feed { Url = model.Url };
+        _db.Add(feed);
         _db.SaveChanges();
+        _updater.UpdateFeed(feed);
         return Created("",model);
     }
 

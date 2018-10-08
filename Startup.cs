@@ -53,8 +53,22 @@ namespace api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseSpaApiOnly();
+
             app.UseMvc();
+
+
+            app.UseCors(cfg => cfg.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                if (serviceScope.ServiceProvider.GetService<AppDb>() != null)
+                {
+                    var ctx = serviceScope.ServiceProvider.GetService<AppDb>();
+                    new DatabaseFacade(ctx).Migrate();
+                }
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ public class UpdaterJob
         return _db.Shows.Count() - counts;
     }
 
-    private int UpdateFeed(Feed f)
+    public void UpdateFeed(Feed f)
     {
         var itemList = FeedReader.ReadAsync(f.Url).Result.Items;
 
@@ -31,6 +31,5 @@ public class UpdaterJob
                 Console.WriteLine(x.Title);
              });
         _db.SaveChanges();
-        return itemList.Count;
     }
 }
