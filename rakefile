@@ -1,0 +1,11 @@
+require 'uri'
+require 'net/http'
+
+
+task :default do
+   puts 'update started'
+         uri = URI.parse("http://linky-app.herokuapp.com/api/feeds/update")
+         response = Net::HTTP.get_response(uri)
+         puts response.inspect # this line not getting printed
+    puts 'update ended!'
+end
