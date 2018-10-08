@@ -24,11 +24,18 @@ public class UpdaterJob
     {
         var itemList = FeedReader.ReadAsync(f.Url).Result.Items;
 
-        itemList.ToList().ForEach(x =>{
-             if (!_db.Shows.Any(s=> s.FeedId == f.Id && s.Title == x.Title))
-                _db.Add(new Show{ FeedId = f.Id, Title = x.Title , PubDate = x.PublishingDate, Url = x.Link});
+        itemList.ToList()
+        .GroupBy(x=>x.Title)
+        .ToList()
+        .ForEach(x =>{
+             if (!_db.Shows.Any(s=> s.FeedId == f.Id && s.Title == x.First().Title))
+                _db.Add(new Show{
+                     FeedId = f.Id, 
+                     Title = x.First().Title , 
+                     PubDate = x.First().PublishingDate, 
+                     Url = x.First().Link});
 
-                Console.WriteLine(x.Title);
+                Console.WriteLine(x.First().Title);
              });
         _db.SaveChanges();
     }
