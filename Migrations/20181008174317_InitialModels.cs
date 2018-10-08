@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace api.Migrations
 {
-    public partial class InitialCommit2 : Migration
+    public partial class InitialModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,8 +27,11 @@ namespace api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AccountId = table.Column<int>(nullable: true),
-                    Url = table.Column<string>(nullable: false),
-                    IsPrivate = table.Column<bool>(nullable: false)
+                    Website = table.Column<string>(nullable: false),
+                    FeedUrl = table.Column<string>(nullable: true),
+                    IsPrivate = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    IsDisabled = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,6 +54,7 @@ namespace api.Migrations
                     Title = table.Column<string>(nullable: true),
                     PubDate = table.Column<DateTime>(nullable: true),
                     Url = table.Column<string>(nullable: true),
+                    Source = table.Column<string>(nullable: true),
                     Counts = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

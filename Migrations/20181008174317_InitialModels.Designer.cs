@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace api.Migrations
 {
     [DbContext(typeof(AppDb))]
-    [Migration("20181008134013_InitialCommit2")]
-    partial class InitialCommit2
+    [Migration("20181008174317_InitialModels")]
+    partial class InitialModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,9 +37,15 @@ namespace api.Migrations
 
                     b.Property<int?>("AccountId");
 
+                    b.Property<string>("FeedUrl");
+
+                    b.Property<bool>("IsDisabled");
+
                     b.Property<bool>("IsPrivate");
 
-                    b.Property<string>("Url")
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Website")
                         .IsRequired();
 
                     b.HasKey("Id");
@@ -59,6 +65,8 @@ namespace api.Migrations
                     b.Property<int>("FeedId");
 
                     b.Property<DateTime?>("PubDate");
+
+                    b.Property<string>("Source");
 
                     b.Property<string>("Title");
 
@@ -80,7 +88,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("Show", b =>
                 {
-                    b.HasOne("Feed")
+                    b.HasOne("Feed", "Feed")
                         .WithMany("Shows")
                         .HasForeignKey("FeedId")
                         .OnDelete(DeleteBehavior.Cascade);

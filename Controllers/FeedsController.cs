@@ -1,6 +1,7 @@
 
 
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,8 +16,9 @@ public class FeedsController: ControllerBase{
 
     [HttpPost]
     public ActionResult Post([FromBody] FeedVM model){
+        //Console.WriteLine($"url: {model.Url} with source: {model.Source}");
         if (!ModelState.IsValid) return BadRequest(ModelState);
-        var  feed = new Feed { Url = model.Url };
+        var  feed = new Feed { FeedUrl = model.FeedUrl , Website = model.Website, Name = model.Name};
         _db.Add(feed);
         _db.SaveChanges();
         _updater.UpdateFeed(feed);
@@ -32,6 +34,8 @@ public class FeedsController: ControllerBase{
 }
 
 public class FeedVM{
-    [Required]public string Url { get; set; }
+    [Required] public string Name { get; set; }
+    [Required]public string FeedUrl { get; set; }
+    [Required]public string Website { get; set; }
 
 }

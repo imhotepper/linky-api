@@ -35,9 +35,15 @@ namespace api.Migrations
 
                     b.Property<int?>("AccountId");
 
+                    b.Property<string>("FeedUrl");
+
+                    b.Property<bool>("IsDisabled");
+
                     b.Property<bool>("IsPrivate");
 
-                    b.Property<string>("Url")
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Website")
                         .IsRequired();
 
                     b.HasKey("Id");
@@ -57,6 +63,8 @@ namespace api.Migrations
                     b.Property<int>("FeedId");
 
                     b.Property<DateTime?>("PubDate");
+
+                    b.Property<string>("Source");
 
                     b.Property<string>("Title");
 
@@ -78,7 +86,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("Show", b =>
                 {
-                    b.HasOne("Feed")
+                    b.HasOne("Feed", "Feed")
                         .WithMany("Shows")
                         .HasForeignKey("FeedId")
                         .OnDelete(DeleteBehavior.Cascade);
